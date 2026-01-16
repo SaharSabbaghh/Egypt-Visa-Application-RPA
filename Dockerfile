@@ -74,4 +74,5 @@ ENV PORT=8080
 ENV PYTHONUNBUFFERED=1
 
 # Run Flask app with proper binding and verbose logging
-CMD gunicorn --bind 0.0.0.0:${PORT} --workers 1 --timeout 300 --log-level debug --access-logfile - --error-logfile - app:app
+# Use shell form to allow variable expansion
+CMD gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 300 --log-level debug --access-logfile - --error-logfile - app:app
