@@ -56,7 +56,7 @@ def generate_visa_pdf():
         
         # Validate and create VisaApplication object
         try:
-            app_obj = VisaApplication.from_dict(application_data)
+            app_obj = VisaApplication(application_data)
             is_valid, errors = app_obj.validate()
             
             if not is_valid:
