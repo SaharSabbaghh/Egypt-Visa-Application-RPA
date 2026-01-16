@@ -73,5 +73,9 @@ EXPOSE 8080
 ENV PORT=8080
 ENV PYTHONUNBUFFERED=1
 
-# Run Flask app
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "1", "--timeout", "300", "app:app"]
+# Add healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:${PORT}/health || exit 1
+
+# Run Flask app with proper binding
+CMD gunicorn --bind 0.0.0.0:${PORT} --workers 1 --timeout 300 --log-level info --access-logfile - --error-logfile - app:app
